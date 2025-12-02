@@ -1,0 +1,99 @@
+" ─────────────────────────────────────────────────────────────────────────────────
+"                           VIM CONFIGURATION
+" ─────────────────────────────────────────────────────────────────────────────────
+
+" Enable true colors
+if has('termguicolors')
+  set termguicolors
+endif
+
+" Basic settings
+set nocompatible
+set encoding=utf-8
+set number
+set relativenumber
+set cursorline
+set showmatch
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set autoindent
+set smartindent
+set wrap
+set linebreak
+set scrolloff=8
+set sidescrolloff=8
+set signcolumn=yes
+set updatetime=300
+set mouse=a
+set clipboard=unnamedplus
+set splitright
+set splitbelow
+set hidden
+set nobackup
+set nowritebackup
+set noswapfile
+set undofile
+set undodir=~/.vim/undodir
+
+" Create undodir if it doesn't exist
+if !isdirectory($HOME . "/.vim/undodir")
+  call mkdir($HOME . "/.vim/undodir", "p")
+endif
+
+" Syntax and colorscheme
+syntax enable
+colorscheme kanagawa-gruvbox
+
+" Status line
+set laststatus=2
+set statusline=
+set statusline+=%#TabLineSel#
+set statusline+=\ %f
+set statusline+=\ %m
+set statusline+=%=
+set statusline+=%#StatusLine#
+set statusline+=\ %y
+set statusline+=\ %l:%c
+set statusline+=\ [%p%%]
+set statusline+=\
+
+" Key mappings
+let mapleader = " "
+
+" Quick save/quit
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>x :x<CR>
+
+" Clear search highlight
+nnoremap <leader>/ :nohlsearch<CR>
+
+" Window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Buffer navigation
+nnoremap <leader>bn :bnext<CR>
+nnoremap <leader>bp :bprevious<CR>
+nnoremap <leader>bd :bdelete<CR>
+
+" Move lines up/down
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" Keep cursor centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" Better indenting
+vnoremap < <gv
+vnoremap > >gv

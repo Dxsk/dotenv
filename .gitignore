@@ -1,0 +1,23 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Secrets / Local
+*.local
+*.secret
+.env
+
+# Cache
+*.cache
+__pycache__/
+
+# Backup files
+*.bak
+*.backup

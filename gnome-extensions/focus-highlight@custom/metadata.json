@@ -1,0 +1,8 @@
+{
+  "name": "Focus Highlight",
+  "description": "Adds a colored border around the focused window",
+  "uuid": "focus-highlight@custom",
+  "version": 1,
+  "shell-version": ["45", "46", "47", "48", "49"],
+  "url": ""
+}
