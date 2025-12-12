@@ -25,10 +25,25 @@ if (( $+commands[fzf] )); then
     "
 
     # Load fzf keybindings (Ctrl+R for history, Ctrl+T for files, Alt+C for cd)
-    if [[ -f /usr/share/fzf/shell/key-bindings.zsh ]]; then
-        source /usr/share/fzf/shell/key-bindings.zsh
-    elif [[ -f ~/.fzf.zsh ]]; then
-        source ~/.fzf.zsh
-    fi
+    # Paths vary by distro:
+    #   Fedora:       /usr/share/fzf/shell/key-bindings.zsh
+    #   Arch:         /usr/share/fzf/key-bindings.zsh
+    #   Debian/Ubuntu:/usr/share/doc/fzf/examples/key-bindings.zsh
+    #   Manual/Homebrew: ~/.fzf.zsh
+    local fzf_keybindings=(
+        /usr/share/fzf/shell/key-bindings.zsh      # Fedora
+        /usr/share/fzf/key-bindings.zsh            # Arch
+        /usr/share/doc/fzf/examples/key-bindings.zsh  # Debian/Ubuntu
+        ~/.fzf.zsh                                  # Manual install / Homebrew
+        /opt/homebrew/opt/fzf/shell/key-bindings.zsh  # macOS ARM Homebrew
+        /usr/local/opt/fzf/shell/key-bindings.zsh     # macOS Intel Homebrew
+    )
+
+    for fzf_file in "${fzf_keybindings[@]}"; do
+        if [[ -f "$fzf_file" ]]; then
+            source "$fzf_file"
+            break
+        fi
+    done
 
 fi
