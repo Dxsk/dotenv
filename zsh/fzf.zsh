@@ -24,4 +24,11 @@ if (( $+commands[fzf] )); then
       --bind 'ctrl-y:execute-silent(echo -n {2..} | xclip -selection clipboard)+abort'
     "
 
+    # Load fzf keybindings (Ctrl+R for history, Ctrl+T for files, Alt+C for cd)
+    if [[ -f /usr/share/fzf/shell/key-bindings.zsh ]]; then
+        source /usr/share/fzf/shell/key-bindings.zsh
+    elif [[ -f ~/.fzf.zsh ]]; then
+        source ~/.fzf.zsh
+    fi
+
 fi
