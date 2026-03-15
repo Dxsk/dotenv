@@ -1,0 +1,13 @@
+# Aliases modernes
+alias cat="bat --style=auto"
+alias ocat="/usr/bin/cat"
+alias ols="/usr/bin/ls --color"
+alias oll="/usr/bin/ls -lart --color"
+alias ll="exa -lar"
+alias find="fd"
+alias du="dust"
+alias top="btop"
+alias diff="diff --color=auto"
+alias hy3.reload="hyprctl keyword general:layout hy3"
+alias hm="home-manager switch --flake ~/Documents/dotenv#\$USER --impure -b backup"
+alias hm-news="home-manager news --flake ~/Documents/dotenv#\$USER --impure"
