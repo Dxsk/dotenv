@@ -13,8 +13,9 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      username = builtins.getEnv "USER";
-      homeDir = builtins.getEnv "HOME";
+      # Override via --impure, or set defaults in env.nix
+      username = let env = builtins.getEnv "USER"; in if env != "" then env else "user";
+      homeDir = let env = builtins.getEnv "HOME"; in if env != "" then env else "/home/${username}";
     in
     {
       homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
