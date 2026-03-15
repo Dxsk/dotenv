@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, system, ... }:
 
 let
   # Packages that must be installed via pacman (D-Bus, system services, etc.)
@@ -9,10 +9,12 @@ let
   ];
 in
 {
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     # Bluetooth
     blueman
     bluetuith
+  ]) ++ [
+    inputs.git-identity-manager.packages.${system}.default
   ];
 
   # Check that pacman/AUR dependencies are present
