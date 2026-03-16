@@ -20,7 +20,7 @@ _sourceme_check() {
     return
   fi
 
-  # We left the project tree — unsource
+  # We left the project tree - unsource
   if [[ -n "$_SOURCEME_ROOT" ]]; then
     _sourceme_unload
   fi

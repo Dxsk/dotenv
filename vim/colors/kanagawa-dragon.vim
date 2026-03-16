@@ -1,4 +1,4 @@
-" Dragon Fire colorscheme for Vim — Enhanced
+" Dragon Fire colorscheme for Vim - Enhanced
 set background=dark
 hi clear
 if exists("syntax_on")

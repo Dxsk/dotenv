@@ -48,9 +48,9 @@ Managed declaratively with **Nix Flakes** + **Home Manager**.
 
 CachyOS is an Arch-based distribution optimized for performance out of the box:
 - **Performance-tuned kernel** (BORE scheduler, x86-64-v3/v4 optimized packages)
-- **Stable enough for a daily driver** — rolling release with the full Arch ecosystem, but with sane defaults and a graphical installer
-- **Tried Bazzite OS** for a few months — ran into persistent video issues (screen tearing, compositor glitches) that were never a problem on CachyOS, so switched back
-- **Caution with LUKS + TPM2**: kernel or bootloader updates can break automatic TPM2 unlock — always keep a recovery key and re-enroll after major updates
+- **Stable enough for a daily driver** - rolling release with the full Arch ecosystem, but with sane defaults and a graphical installer
+- **Tried Bazzite OS** for a few months - ran into persistent video issues (screen tearing, compositor glitches) that were never a problem on CachyOS, so switched back
+- **Caution with LUKS + TPM2**: kernel or bootloader updates can break automatic TPM2 unlock - always keep a recovery key and re-enroll after major updates
 
 ## Prerequisites
 
@@ -149,12 +149,12 @@ Automated home directory backup using [restic](https://restic.net/) + [rclone](h
 **Secrets management chain:**
 - Backup encryption password is stored in [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/) (BWS)
 - BWS access token is stored locally in `~/.config/bws/$USER-desktop.key`
-- Restic retrieves the password from BWS on each run — never stored on disk
+- Restic retrieves the password from BWS on each run - never stored on disk
 
 **How it works:**
-- `home-backup backup` — incremental backup of `$HOME` to kDrive via rclone
-- `home-backup prune` — retention policy: 7 daily, 4 weekly, 6 monthly snapshots
-- `home-backup restore <id>` — restore a specific snapshot
+- `home-backup backup` - incremental backup of `$HOME` to kDrive via rclone
+- `home-backup prune` - retention policy: 7 daily, 4 weekly, 6 monthly snapshots
+- `home-backup restore <id>` - restore a specific snapshot
 - Desktop notifications via `notify-send` on success/failure
 
 See [scripts/home-backup.sh](scripts/home-backup.sh) for the full script.
