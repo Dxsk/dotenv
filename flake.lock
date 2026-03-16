@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "git-identity-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773617337,
+        "narHash": "sha256-PZa9ERBh0o1c05ppScXgNbshvl7kNGPAA/xmS8tbNEc=",
+        "owner": "Dxsk",
+        "repo": "git-identity-manager",
+        "rev": "0e7b206d90c713fac1183defd4aff5fb15de8c25",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Dxsk",
+        "repo": "git-identity-manager",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -38,6 +58,7 @@
     },
     "root": {
       "inputs": {
+        "git-identity-manager": "git-identity-manager",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }
