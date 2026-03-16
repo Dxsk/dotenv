@@ -43,6 +43,7 @@ Managed declaratively with **Nix Flakes** + **Home Manager**.
 | Icons       | [WhiteSur-dark](https://github.com/vinceliuice/WhiteSur-icon-theme) |
 | Cursor      | [Capitaine Cursors](https://github.com/keeferrourke/capitaine-cursors) |
 | Font        | [JetBrainsMono Nerd Font](https://www.nerdfonts.com/) |
+| Git Identity| [git-identity-manager](https://github.com/Dxsk/git-identity-manager) (flake input) |
 
 ## Why CachyOS?
 
@@ -93,10 +94,12 @@ sudo pacman -S mate mate-extra
 
 ```
 dotenv/
-├── flake.nix                          # Nix flake entry point
+├── flake.nix                          # Nix flake entry point (+ git-identity-manager input)
 ├── home.nix                           # Home Manager main config
 ├── modules/
 │   ├── packages.nix                   # CLI tools (nix-managed)
+│   ├── backup.nix                     # Home backup (restic + rclone)
+│   ├── desktop-entries.nix            # Desktop entries
 │   ├── vim.nix                        # Vim config
 │   ├── zsh.nix                        # Zsh + Oh My Zsh
 │   ├── kitty.nix                      # Kitty terminal
@@ -104,12 +107,18 @@ dotenv/
 │   ├── gtk.nix                        # GTK theming
 │   └── qt.nix                         # Qt theming
 ├── scripts/
-│   ├── zsh-init-first.zsh             # Zsh early init (p10k instant prompt)
-│   └── zsh-init-extra.zsh             # Zsh extra init (cachyos, zoxide, etc.)
+│   └── home-backup.sh                 # Restic backup script
+├── zsh/
+│   ├── aliases.zsh                    # Shell aliases
+│   ├── init.zsh                       # Zsh init (cachyos, zoxide, etc.)
+│   ├── plugins.zsh                    # Oh My Zsh plugins
+│   ├── prompt.zsh                     # Powerlevel10k instant prompt
+│   └── sourceme.zsh                   # Auto-load/unload project env files
 ├── config/
 │   ├── hypr/
 │   │   ├── hyprland.conf
 │   │   ├── monitors.conf
+│   │   ├── workspaces.conf
 │   │   ├── hyprqt6engine.conf
 │   │   └── hypridle.conf
 │   ├── kitty/
@@ -121,6 +130,7 @@ dotenv/
 │   ├── qt6ct/qt6ct.conf
 │   ├── Kvantum/kvantum.kvconfig
 │   ├── kdeglobals
+│   ├── vesktop-flags.conf
 │   ├── ambxst/colors/Dragon_Fire/
 │   │   ├── dark.json
 │   │   └── light.json
@@ -128,8 +138,15 @@ dotenv/
 │       ├── extensions.txt
 │       └── User/settings.json
 ├── screenshots/                       # Desktop screenshots
-├── vim/colors/kanagawa-dragon.vim
-└── vimrc
+└── vim/
+    ├── colors/kanagawa-dragon.vim
+    └── config/
+        ├── apparence.vim
+        ├── cursor.vim
+        ├── keybinds.vim
+        ├── scroll.vim
+        ├── settings.vim
+        └── statusline.vim
 ```
 
 ## How it works
@@ -139,6 +156,8 @@ Home Manager manages the user environment declaratively:
 - **CLI tools**: installed via Nix in an isolated store (doesn't conflict with pacman)
 - **Idempotent**: running `home-manager switch` multiple times always produces the same result
 - **Rollback**: every deployment creates a generation you can switch back to
+
+- **External flake inputs**: tools like [git-identity-manager](https://github.com/Dxsk/git-identity-manager) are pulled in as flake inputs and added to `home.packages`
 
 System-level packages (Hyprland, pipewire, docker daemon, fonts, etc.) remain managed by pacman.
 
