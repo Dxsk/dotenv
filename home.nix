@@ -34,12 +34,18 @@
     # KDE globals
     "kdeglobals".source = ./config/kdeglobals;
 
-    # VSCodium
-    "VSCodium/User/settings.json".source = ./config/VSCodium/User/settings.json;
+    # VSCodium settings.json is copied via activation script below
+    # so VSCodium can write to it (symlinks are read-only)
 
     # Vesktop (Discord) - flags Wayland + screen sharing PipeWire
     "vesktop-flags.conf".source = ./config/vesktop-flags.conf;
   };
+
+  # Copy VSCodium settings as a regular file so it remains writable
+  home.activation.vscodiumSettings = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    install -Dm644 ${./config/VSCodium/User/settings.json} \
+      "${config.xdg.configHome}/VSCodium/User/settings.json"
+  '';
 
   programs.home-manager.enable = true;
 }
