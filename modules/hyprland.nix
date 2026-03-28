@@ -3,8 +3,8 @@
 let
   hyprlandConf = pkgs.writeText "hyprland.conf" (
     builtins.replaceStrings
-      [ "/var/cache/hyprpm/$USER/" ]
-      [ "/var/cache/hyprpm/${username}/" ]
+      [ "/home/$USER/" ]
+      [ "/home/${username}/" ]
       (builtins.readFile ../config/hypr/hyprland.conf)
   );
 in
