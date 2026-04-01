@@ -56,8 +56,27 @@ alias gid="git-identity"
 
 # Dotfiles management
 export DOTENV_DIR="${DOTENV_DIR:-$HOME/Documents/github.com/Dxsk/dotenv}"
-alias dot="cd $DOTENV_DIR && stow -t ~ ."
-alias dot-remove="cd $DOTENV_DIR && stow -D -t ~ ."
+dot() {
+  echo "\033[1;33m===\033[0m Dotenv \033[1;33mupdate\033[0m \033[1;33m===\033[0m"
+  echo "  \033[0;36mSource:\033[0m $DOTENV_DIR"
+  echo "  \033[0;36mTarget:\033[0m $HOME"
+  echo ""
+  local changes=0
+  (cd "$DOTENV_DIR" && stow -t "$HOME" --restow --verbose=1 .) 2>&1 | while read -r line; do
+    if [[ "$line" == *LINK:* ]]; then
+      local file="${line##*LINK: }"
+      echo "  \033[0;32m+\033[0m \033[0;36mLINK\033[0m \033[0;37m$file\033[0m"
+    elif [[ "$line" == *UNLINK:* ]]; then
+      local file="${line##*UNLINK: }"
+      echo "  \033[0;31m-\033[0m \033[0;33mUNLINK\033[0m \033[0;90m$file\033[0m"
+    else
+      echo "  $line"
+    fi
+  done
+  echo ""
+  source ~/.zshrc 2>/dev/null
+  echo "\033[1;33m===\033[0m Done. \033[0;32mShell reloaded.\033[0m"
+}
 
 # Auto-load/unload sourceme files
 source ~/.config/zsh/sourceme.zsh

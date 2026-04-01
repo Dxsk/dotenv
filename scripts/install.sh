@@ -61,6 +61,7 @@ PACMAN_PKGS+=(
 PACMAN_PKGS+=(
   loupe
   file-roller
+  showmethekey
 )
 
 # Audio/media

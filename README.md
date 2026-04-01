@@ -135,6 +135,7 @@ dotenv/
 | `ALT + SHIFT + L` | Lock screen |
 | `ALT + SHIFT + V` | Clipboard history |
 | `ALT + SHIFT + S` | Screenshot region → clipboard |
+| `ALT + SHIFT + K` | Toggle key display overlay |
 | `ALT + SHIFT + M` | Exit Hyprland |
 | `ALT + arrows` | Move focus |
 | `ALT + SHIFT + arrows` | Move window |

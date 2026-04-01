@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if pidof showmethekey-gtk > /dev/null 2>&1; then
+    kill $(pidof showmethekey-gtk) 2>/dev/null
+    pkill -9 showmethekey-cli 2>/dev/null
+    sudo pkill -9 showmethekey-cli 2>/dev/null
+else
+    showmethekey-gtk -A -C &
+    sleep 1.5
+    hyprctl dispatch movewindowpixel "exact 1320 2440,class:one.alynx.showmethekey"
+fi
