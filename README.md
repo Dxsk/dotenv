@@ -1,179 +1,183 @@
 # Dragon Fire Desktop
 
-CachyOS (Arch) + Hyprland desktop configuration with custom "Dragon Fire" theme.
-Managed declaratively with **Nix Flakes** + **Home Manager**.
+CachyOS (Arch) + Hyprland desktop configuration with Caelestia Shell and dynamic wallpaper theming.
+Managed with **GNU Stow**.
 
 ---
-
-## Screenshots
-
-| 4K Display | 1080p Display |
-|:---:|:---:|
-| ![4K Desktop](screenshots/screen-0.png) | ![1080p Desktop](screenshots/screen-1.png) |
-
-<details>
-<summary>More screenshots</summary>
-
-![Demo](screenshots/demo1.png)
-![Demo](screenshots/demo2.png)
-![Ambxst Bar & Shell](screenshots/demo3.png)
-
-</details>
 
 ## Theme
 
 - **Source Color**: `#fd5622` (vivid orange)
 - **Accent**: `#e53935` (red)
-- **Background**: dark greys (`#181616`, `#1e100c`)
-- **Style**: Kanagawa Dragon inspired with Material You palette
+- **Style**: Kanagawa Dragon inspired, dynamic Material You palette via Caelestia
+- **Wallpapers** change the entire color scheme automatically
 
 ## Stack
 
-| Component    | Choice                        |
-|-------------|-------------------------------|
-| WM          | [Hyprland](https://hyprland.org/) + [hy3](https://github.com/outfoxxed/hy3) |
-| Bar/Shell   | [Ambxst](https://github.com/Axenide/Ambxst) |
-| Terminal    | [Kitty](https://sw.kovidgoyal.net/kitty/) |
-| Shell       | [Zsh](https://www.zsh.org/) + [Oh My Zsh](https://ohmyz.sh/) + [Powerlevel10k](https://github.com/romkatv/powerlevel10k) |
-| Editor      | [Vim](https://www.vim.org/) + [VSCodium](https://vscodium.com/) |
-| File Manager| [Dolphin](https://apps.kde.org/dolphin/) |
-| Launcher    | [Hyprlauncher](https://github.com/hyprwm/hyprlauncher) |
-| GTK Theme   | [WhiteSur-Dark](https://github.com/vinceliuice/WhiteSur-gtk-theme) |
-| Qt Theme    | qt6ct-kde + Fusion + [KvDarkRed](https://github.com/tsujan/Kvantum) |
-| Icons       | [WhiteSur-dark](https://github.com/vinceliuice/WhiteSur-icon-theme) |
-| Cursor      | [Capitaine Cursors](https://github.com/keeferrourke/capitaine-cursors) |
-| Font        | [JetBrainsMono Nerd Font](https://www.nerdfonts.com/) |
-| Git Identity| [git-identity-manager](https://github.com/Dxsk/git-identity-manager) (flake input) |
-
-## Why CachyOS?
-
-CachyOS is an Arch-based distribution optimized for performance out of the box:
-- **Performance-tuned kernel** (BORE scheduler, x86-64-v3/v4 optimized packages)
-- **Stable enough for a daily driver** - rolling release with the full Arch ecosystem, but with sane defaults and a graphical installer
-- **Tried Bazzite OS** for a few months - ran into persistent video issues (screen tearing, compositor glitches) that were never a problem on CachyOS, so switched back
-- **Caution with LUKS + TPM2**: kernel or bootloader updates can break automatic TPM2 unlock - always keep a recovery key and re-enroll after major updates
+| Component      | Choice |
+|---------------|--------|
+| WM            | [Hyprland](https://hyprland.org/) (dwindle layout) |
+| Shell         | [Caelestia Shell](https://github.com/caelestia-dots/shell) (Quickshell/QML) |
+| Session       | [greetd](https://sr.ht/~kennylevinsen/greetd/) + [ReGreet](https://github.com/rharish101/ReGreet) |
+| Terminal      | [Kitty](https://sw.kovidgoyal.net/kitty/) |
+| Shell (CLI)   | [Zsh](https://www.zsh.org/) + [Oh My Zsh](https://ohmyz.sh/) + [Powerlevel10k](https://github.com/romkatv/powerlevel10k) |
+| Editor        | [Vim](https://www.vim.org/) + [VSCodium](https://vscodium.com/) |
+| File Manager  | [Thunar](https://docs.xfce.org/xfce/thunar/start) |
+| Browser       | [Zen Browser](https://zen-browser.app/) |
+| Launcher      | [Caelestia launcher](https://github.com/caelestia-dots/shell) (integrated) |
+| GTK Theme     | [adw-gtk3-dark](https://github.com/lassekongo83/adw-gtk3) + Caelestia dynamic colors |
+| Qt Theme      | [Kvantum](https://github.com/tsujan/Kvantum) (WhiteSurDark) via qt6ct |
+| Icons         | [Papirus-Dark](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) |
+| Cursor        | [Capitaine Cursors](https://github.com/keeferrourke/capitaine-cursors) |
+| Font          | [JetBrainsMono Nerd Font](https://www.nerdfonts.com/) |
+| Screen Record | [gpu-screen-recorder](https://github.com/dec05eba/gpu-screen-recorder) (system + mic) |
+| Images        | [Loupe](https://apps.gnome.org/Loupe/) |
+| Archives      | [File Roller](https://wiki.gnome.org/Apps/FileRoller) |
+| Backup        | [restic](https://restic.net/) + [rclone](https://rclone.org/) → kDrive |
+| Git Identity  | [git-identity-manager](https://github.com/Dxsk/git-identity-manager) |
 
 ## Prerequisites
 
 - [CachyOS](https://cachyos.org/) (or Arch Linux)
-- [Nix package manager](https://determinate.systems/nix-installer/) (standalone, not NixOS)
-- System packages installed via pacman (Hyprland, pipewire, docker, etc.)
+- [yay](https://github.com/Jguer/yay) (AUR helper)
 
-## Usage
+## Install
 
 ```bash
-# First time: install Nix
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-
-# Deploy (first time)
-cd ~/Documents/dotenv
-nix run home-manager -- switch --flake .#$USER
-
-# Deploy (after changes)
-home-manager switch --flake .#$USER
-
-# Rollback to previous generation
-home-manager switch --rollback
-
-# List all generations
-home-manager generations
+git clone git@github.com:Dxsk/dotenv.git ~/Documents/github.com/Dxsk/dotenv
+cd ~/Documents/github.com/Dxsk/dotenv
+bash scripts/install.sh
 ```
 
-## Fallback: MATE Desktop
+The install script will:
+1. Install `yay` and `stow` if missing
+2. Install all packages (pacman + AUR)
+3. Clean up old nix symlinks (if migrating)
+4. Stow dotfiles to `~/`
+5. Clone/update linked projects (git-identity-manager, mtd)
+6. Enable systemd backup timers
+7. Apply system tuning (sysctl, dbus limits)
 
-If Hyprland breaks or is unusable (GPU issues, driver update, etc.), MATE is available as a fallback desktop:
+After install, **log out and back in** for full effect.
+
+## Update
 
 ```bash
-# Install MATE
-sudo pacman -S mate mate-extra
-
-# Select MATE from the login screen (GDM/SDDM session picker)
+dot   # alias: cd to dotenv + stow
 ```
 
 ## Structure
 
 ```
 dotenv/
-├── flake.nix                          # Nix flake entry point (+ git-identity-manager input)
-├── home.nix                           # Home Manager main config
-├── modules/
-│   ├── packages.nix                   # CLI tools (nix-managed)
-│   ├── backup.nix                     # Home backup (restic + rclone)
-│   ├── desktop-entries.nix            # Desktop entries
-│   ├── vim.nix                        # Vim config
-│   ├── zsh.nix                        # Zsh + Oh My Zsh
-│   ├── kitty.nix                      # Kitty terminal
-│   ├── hyprland.nix                   # Hyprland configs
-│   ├── gtk.nix                        # GTK theming
-│   └── qt.nix                         # Qt theming
-├── scripts/
-│   └── home-backup.sh                 # Restic backup script
-├── zsh/
-│   ├── aliases.zsh                    # Shell aliases
-│   ├── init.zsh                       # Zsh init (cachyos, zoxide, etc.)
-│   ├── plugins.zsh                    # Oh My Zsh plugins
-│   ├── prompt.zsh                     # Powerlevel10k instant prompt
-│   └── sourceme.zsh                   # Auto-load/unload project env files
-├── config/
+├── .config/
 │   ├── hypr/
-│   │   ├── hyprland.conf
-│   │   ├── monitors.conf
-│   │   ├── workspaces.conf
-│   │   ├── hyprqt6engine.conf
-│   │   └── hypridle.conf
+│   │   ├── hyprland.conf          # Main config (dwindle, i3-like binds)
+│   │   ├── hyprlock.conf          # Lock screen
+│   │   ├── hypridle.conf          # Idle timeouts
+│   │   ├── hyprqt6engine.conf     # Qt6 engine config
+│   │   ├── monitors.conf          # Monitor layout & refresh rates
+│   │   └── workspaces.conf        # Workspace assignments per monitor
+│   ├── caelestia/
+│   │   ├── shell.json             # Shell config (bar, dashboard, theming, idle)
+│   │   └── cli.json               # CLI config (record extraArgs for mic)
 │   ├── kitty/
 │   │   ├── kitty.conf
 │   │   └── kanagawa-dragon.conf
+│   ├── gtk-3.0/settings.ini       # GTK3 theme (adw-gtk3-dark)
+│   ├── gtk-4.0/settings.ini       # GTK4 theme
+│   ├── qt6ct/qt6ct.conf           # Qt6 theme (Kvantum)
+│   ├── Kvantum/kvantum.kvconfig   # Kvantum theme (WhiteSurDark)
+│   ├── zsh/                       # Zsh modules (sourced by .zshrc)
+│   ├── systemd/user/              # Backup timers & services
 │   ├── fastfetch/config.jsonc
-│   ├── gtk-3.0/settings.ini
-│   ├── gtk-4.0/settings.ini
-│   ├── qt6ct/qt6ct.conf
-│   ├── Kvantum/kvantum.kvconfig
+│   ├── VSCodium/User/settings.json
 │   ├── kdeglobals
-│   ├── vesktop-flags.conf
-│   ├── ambxst/colors/Dragon_Fire/
-│   │   ├── dark.json
-│   │   └── light.json
-│   └── VSCodium/
-│       ├── extensions.txt
-│       └── User/settings.json
-├── screenshots/                       # Desktop screenshots
-└── vim/
-    ├── colors/kanagawa-dragon.vim
-    └── config/
-        ├── apparence.vim
-        ├── cursor.vim
-        ├── keybinds.vim
-        ├── scroll.vim
-        ├── settings.vim
-        └── statusline.vim
+│   └── vesktop-flags.conf         # Vesktop Wayland flags
+├── .local/
+│   ├── bin/
+│   │   ├── home-backup            # Restic backup script
+│   │   └── git-identity           # Git identity switcher
+│   └── share/applications/
+│       └── zen.desktop            # Zen Browser with --no-remote
+├── .vim/
+│   ├── colors/kanagawa-dragon.vim
+│   └── config/                    # Modular vim config
+├── .vimrc
+├── .zshrc
+├── system/
+│   └── greetd/                    # Session manager configs (copied to /etc)
+│       ├── config.toml
+│       ├── hyprland.conf
+│       └── regreet.toml
+├── scripts/
+│   ├── install.sh                 # Bootstrap script (packages, stow, system)
+│   └── projects.conf              # Linked projects to clone/update
+├── screenshots/
+│   └── wallpaper.jpg              # Default wallpaper for greeter
+└── .stow-local-ignore
 ```
 
-## How it works
+## Keybindings
 
-Home Manager manages the user environment declaratively:
-- **Dotfiles**: symlinked to `~/.config/`, `~/.vimrc`, etc.
-- **CLI tools**: installed via Nix in an isolated store (doesn't conflict with pacman)
-- **Idempotent**: running `home-manager switch` multiple times always produces the same result
-- **Rollback**: every deployment creates a generation you can switch back to
-
-- **External flake inputs**: tools like [git-identity-manager](https://github.com/Dxsk/git-identity-manager) are pulled in as flake inputs and added to `home.packages`
-
-System-level packages (Hyprland, pipewire, docker daemon, fonts, etc.) remain managed by pacman.
+| Bind | Action |
+|------|--------|
+| `ALT + T` | Terminal (kitty) |
+| `ALT + D` | App launcher (Caelestia) |
+| `ALT + E` | File manager (thunar) |
+| `ALT + C` | Kill window |
+| `ALT + F` | Fullscreen |
+| `ALT + V` | Toggle floating |
+| `ALT + W` | Toggle tabbed group |
+| `ALT + H` | Toggle split direction |
+| `ALT + R` | Resize mode (arrows, Escape to exit) |
+| `ALT + B` | Random wallpaper |
+| `ALT + SHIFT + L` | Lock screen |
+| `ALT + SHIFT + V` | Clipboard history |
+| `ALT + SHIFT + S` | Screenshot region → clipboard |
+| `ALT + SHIFT + M` | Exit Hyprland |
+| `ALT + arrows` | Move focus |
+| `ALT + SHIFT + arrows` | Move window |
+| `ALT + 1-0` | Switch workspace |
+| `ALT + SHIFT + 1-0` | Move window to workspace |
+| `Print` | Screenshot region (with annotation) |
+| `ALT + Print` | Screenshot fullscreen |
 
 ## Home Backup
 
-Automated home directory backup using [restic](https://restic.net/) + [rclone](https://rclone.org/) to [kDrive](https://www.infomaniak.com/en/kdrive) (Infomaniak cloud storage).
+Automated home directory backup using restic + rclone to kDrive (Infomaniak).
 
-**Secrets management chain:**
-- Backup encryption password is stored in [Bitwarden Secrets Manager](https://bitwarden.com/products/secrets-manager/) (BWS)
-- BWS access token is stored locally in `~/.config/bws/$USER-desktop.key`
-- Restic retrieves the password from BWS on each run - never stored on disk
+- `home-backup backup` — incremental backup
+- `home-backup prune` — retention: 7 daily, 4 weekly, 6 monthly
+- `home-backup restore <id>` — restore a snapshot
+- Secrets via Bitwarden Secrets Manager (BWS) — never stored on disk
+- Systemd timers: daily backup, weekly prune, monthly integrity check
 
-**How it works:**
-- `home-backup backup` - incremental backup of `$HOME` to kDrive via rclone
-- `home-backup prune` - retention policy: 7 daily, 4 weekly, 6 monthly snapshots
-- `home-backup restore <id>` - restore a specific snapshot
-- Desktop notifications via `notify-send` on success/failure
+## Linked Projects
 
-See [scripts/home-backup.sh](scripts/home-backup.sh) for the full script.
+The install script can automatically clone and set up external projects alongside the dotenv. This is configured in `scripts/projects.conf`:
+
+```conf
+# Format: git_repo_url  install_command (optional)
+git@github.com:Dxsk/git-identity-manager.git  install -m755 git-identity.sh ~/.local/bin/git-identity
+git@github.com:Dxsk/mtd.git  uv pip install -e .
+```
+
+Each line is a git repo to clone into the same parent directory as the dotenv. The optional install command runs from the project directory after clone/pull.
+
+**Currently linked:**
+
+| Project | Description | Install |
+|---------|-------------|---------|
+| [git-identity-manager](https://github.com/Dxsk/git-identity-manager) | Switch git identities per-repo with fzf | Copies script to `~/.local/bin` |
+| [mtd](https://github.com/Dxsk/mtd) | Markdown to Documents converter | Python editable install via uv |
+
+**To add your own project**, just append a line to `scripts/projects.conf`:
+
+```conf
+git@github.com:user/repo.git  optional_install_command
+```
+
+**To remove a project**, delete or comment out the line. Projects are only cloned/updated, never deleted — you manage that yourself.
+
+On a fresh machine, `install.sh` clones everything. On subsequent runs, it pulls updates and re-runs install commands.

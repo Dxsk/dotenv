@@ -1,0 +1,17 @@
+[background]
+path = "__HOME__/Pictures/wallpaper.jpg"
+fit = "Cover"
+
+[GTK]
+application_prefer_dark_theme = true
+cursor_theme_name = "capitaine-cursors"
+font_name = "Adwaita Sans 11"
+icon_theme_name = "Papirus-Dark"
+theme_name = "adw-gtk3-dark"
+
+[commands]
+reboot = [ "systemctl", "reboot" ]
+poweroff = [ "systemctl", "poweroff" ]
+
+[default_session]
+provider = "wayland"

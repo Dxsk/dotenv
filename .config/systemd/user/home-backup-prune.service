@@ -1,0 +1,10 @@
+[Unit]
+Description=Restic prune des anciens snapshots
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/home-backup prune
+Nice=19
+IOSchedulingClass=idle

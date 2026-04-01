@@ -1,0 +1,10 @@
+[Unit]
+Description=Restic verification d'integrite du depot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/home-backup check
+Nice=19
+IOSchedulingClass=idle

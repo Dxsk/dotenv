@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer pour backup quotidien du home
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=30min
+
+[Install]
+WantedBy=timers.target

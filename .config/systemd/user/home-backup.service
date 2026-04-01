@@ -1,0 +1,10 @@
+[Unit]
+Description=Restic backup du home vers kDrive WebDAV
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/home-backup backup
+Nice=10
+IOSchedulingClass=idle
