@@ -1,0 +1,11 @@
+#!/bin/bash
+# Screenshot multi-choice menu via rofi
+
+choice=$(echo -e "󰒅  Zone\n  Ecran entier\n  Fenêtre\n󰔛  Zone (délai 3s)" | rofi -dmenu -p "󰹑 Screenshot" -theme-str 'window {fullscreen: false; width: 280px; padding: 0;} listview {lines: 4;}')
+
+case "$choice" in
+    *Zone*délai*) sleep 3 && grimblast copy area ;;
+    *Zone*) grimblast copy area ;;
+    *Ecran*) grimblast copy output ;;
+    *Fenêtre*) grimblast copy window ;;
+esac

@@ -1,0 +1,65 @@
+#!/bin/bash
+# Programmable timer for waybar
+# Usage: timer start <minutes> | timer stop | timer status
+
+PIDFILE="/tmp/waybar-timer.pid"
+ENDFILE="/tmp/waybar-timer.end"
+LABELFILE="/tmp/waybar-timer.label"
+
+start_timer() {
+    local minutes="$1"
+    local label="${2:-Timer}"
+    stop_timer 2>/dev/null
+
+    local end=$(($(date +%s) + minutes * 60))
+    echo "$end" > "$ENDFILE"
+    echo "$label" > "$LABELFILE"
+
+    (
+        while [ "$(date +%s)" -lt "$end" ]; do
+            sleep 1
+        done
+        notify-send -u critical -a "Timer" "󰔛 $label terminé !" "${minutes}min écoulées"
+        rm -f "$ENDFILE" "$LABELFILE" "$PIDFILE"
+    ) &
+    echo $! > "$PIDFILE"
+}
+
+stop_timer() {
+    [ -f "$PIDFILE" ] && kill "$(cat "$PIDFILE")" 2>/dev/null
+    rm -f "$PIDFILE" "$ENDFILE" "$LABELFILE"
+}
+
+status_timer() {
+    if [ -f "$ENDFILE" ]; then
+        local now=$(date +%s)
+        local end=$(cat "$ENDFILE")
+        local remaining=$((end - now))
+        if [ "$remaining" -le 0 ]; then
+            echo '{"text": "󰔛 done", "class": "done", "tooltip": "Timer terminé"}'
+            rm -f "$ENDFILE" "$LABELFILE" "$PIDFILE"
+        else
+            local min=$((remaining / 60))
+            local sec=$((remaining % 60))
+            local label=$(cat "$LABELFILE" 2>/dev/null || echo "Timer")
+            printf '{"text": "󰔛 %02d:%02d", "class": "running", "tooltip": "%s - %02d:%02d restantes"}\n' "$min" "$sec" "$label" "$min" "$sec"
+        fi
+    else
+        echo '{"text": "󰔛", "class": "idle", "tooltip": "Clic: démarrer un timer"}'
+    fi
+}
+
+ask_timer() {
+    local input
+    input=$(echo -e "5\n10\n15\n25\n30\n45\n60" | rofi -dmenu -p "󰔛 Timer (minutes)" -theme-str 'window {fullscreen: false; width: 300px; padding: 0;} listview {lines: 7;}')
+    [ -z "$input" ] && exit 0
+    start_timer "$input" "Timer ${input}min"
+}
+
+case "$1" in
+    start) start_timer "$2" "$3" ;;
+    stop) stop_timer ;;
+    status) status_timer ;;
+    ask) ask_timer ;;
+    *) echo "Usage: timer {start <min>|stop|status|ask}" ;;
+esac

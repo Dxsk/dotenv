@@ -1,0 +1,43 @@
+#!/bin/bash
+# Change wallpaper with awww transition + matugen dynamic colors
+# Usage: change-wallpaper [image_path]
+#        change-wallpaper --random [directory]
+
+WALLPAPER_DIR="${2:-$HOME/Pictures/wallpapers}"
+
+set_wallpaper() {
+    local img="$1"
+    [ ! -f "$img" ] && echo "File not found: $img" && exit 1
+
+    # Set wallpaper with transition
+    local pos
+    pos=$(hyprctl cursorpos 2>/dev/null | tr -d ' ')
+    awww img "$img" \
+        --resize crop \
+        --transition-type wipe \
+        --transition-duration 1.5 \
+        --transition-fps 60 \
+        --transition-pos "$pos" 2>/dev/null
+
+    # Generate and apply dynamic colors via matugen
+    matugen image "$img" -m dark --source-color-index 0 -q 2>/dev/null
+
+    # Reload theme in background
+    ~/.local/bin/reload-theme & disown 2>/dev/null
+}
+
+case "$1" in
+    --random|-r)
+        img=$(ls "$WALLPAPER_DIR"/*.{jpg,jpeg,png,webp} 2>/dev/null | shuf -n 1)
+        [ -z "$img" ] && echo "No wallpapers found in $WALLPAPER_DIR" && exit 1
+        set_wallpaper "$img"
+        ;;
+    "")
+        echo "Usage: change-wallpaper <image_path>"
+        echo "       change-wallpaper --random [directory]"
+        exit 1
+        ;;
+    *)
+        set_wallpaper "$1"
+        ;;
+esac

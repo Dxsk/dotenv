@@ -1,0 +1,23 @@
+[config]
+reload_apps = true
+reload_apps_list = { waybar = "", swaync = "swaync-client --reload-css" }
+
+[templates.hypr-scheme]
+input_path = "~/.config/matugen/templates/hypr-scheme.conf"
+output_path = "~/.config/hypr/scheme/current.conf"
+
+[templates.waybar-colors]
+input_path = "~/.config/matugen/templates/waybar-colors.css"
+output_path = "~/.local/state/caelestia/theme/waybar-colors.css"
+
+[templates.swaync-colors]
+input_path = "~/.config/matugen/templates/swaync-colors.css"
+output_path = "~/.local/state/caelestia/theme/swaync-colors.css"
+
+[templates.rofi-colors]
+input_path = "~/.config/matugen/templates/rofi-colors.rasi"
+output_path = "~/.local/state/caelestia/theme/rofi-colors.rasi"
+
+[templates.swayosd-colors]
+input_path = "~/.config/matugen/templates/swayosd-colors.css"
+output_path = "~/.local/state/caelestia/theme/swayosd-colors.css"

@@ -1,0 +1,58 @@
+@import "~/.local/state/caelestia/theme/rofi-colors.rasi"
+
+window {
+    fullscreen: true;
+    background-color: rgba(0, 0, 0, 0.55);
+    padding: 200px 500px;
+}
+
+mainbox {
+    background-color: @surface-container;
+    border-radius: 20px;
+    padding: 40px 50px;
+    border: 1px solid;
+    border-color: @outline-variant;
+    children: [listview];
+}
+
+inputbar {
+    enabled: false;
+}
+
+listview {
+    lines: 25;
+    columns: 1;
+    scrollbar: false;
+    background-color: transparent;
+    fixed-height: false;
+    spacing: 2px;
+}
+
+element {
+    padding: 4px 12px;
+    background-color: transparent;
+    border-radius: 0;
+    border: none;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @on-surface;
+}
+
+element selected.normal {
+    background-color: @primary-container;
+    text-color: @on-primary-container;
+    border-radius: 8px;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @on-surface;
+}
+
+element-text {
+    font: "CaskaydiaCove NF 15";
+    background-color: transparent;
+    color: inherit;
+}

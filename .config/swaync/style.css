@@ -1,0 +1,182 @@
+@import url("file:///home/dwi/.local/state/caelestia/theme/swaync-colors.css");
+
+/* ===== Global ===== */
+* {
+    font-family: "Rubik", "CaskaydiaCove NF", sans-serif;
+    font-size: 13px;
+}
+
+/* ===== Control Center ===== */
+.control-center {
+    background: alpha(@base, 0.85);
+    border-radius: 0;
+    border: none;
+    padding: 80px 30%;
+}
+
+/* ===== Title ===== */
+.widget-title {
+    color: @onSurface;
+    margin: 4px 0 8px 0;
+}
+
+.widget-title > label {
+    font-size: 16px;
+    font-weight: 600;
+    color: @primary;
+}
+
+.widget-title > button {
+    background: alpha(@primaryContainer, 0.4);
+    color: @onPrimaryContainer;
+    border-radius: 8px;
+    border: none;
+    padding: 4px 12px;
+    font-size: 12px;
+    transition: all 200ms ease;
+}
+
+.widget-title > button:hover {
+    background: alpha(@primary, 0.25);
+}
+
+/* ===== DND ===== */
+.widget-dnd {
+    background: alpha(@surfaceContainer, 0.6);
+    border-radius: 10px;
+    padding: 6px 12px;
+    margin-bottom: 8px;
+}
+
+.widget-dnd > switch {
+    border-radius: 10px;
+    background: @outline;
+}
+
+.widget-dnd > switch:checked {
+    background: @primary;
+}
+
+.widget-dnd > switch slider {
+    background: @onPrimary;
+    border-radius: 50%;
+    min-width: 16px;
+    min-height: 16px;
+}
+
+/* ===== MPRIS ===== */
+.widget-mpris {
+    background: alpha(@surfaceContainer, 0.6);
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 8px;
+}
+
+.widget-mpris-player {
+    padding: 6px;
+}
+
+.widget-mpris-title {
+    color: @onSurface;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.widget-mpris-subtitle {
+    color: @onSurfaceVariant;
+    font-size: 11px;
+}
+
+/* ===== Notifications ===== */
+.notification-row {
+    outline: none;
+    margin: 4px 0;
+    transition: all 200ms ease;
+}
+
+.notification {
+    background: alpha(@surfaceContainer, 0.6);
+    border-radius: 12px;
+    border: 1px solid alpha(@outlineVariant, 0.2);
+    padding: 0;
+    transition: all 200ms ease;
+}
+
+.notification:hover {
+    background: alpha(@surfaceContainerHigh, 0.7);
+}
+
+.notification-content {
+    padding: 10px 12px;
+}
+
+.notification-default-action {
+    border-radius: 12px;
+}
+
+.close-button {
+    background: alpha(@error, 0.15);
+    color: @error;
+    border-radius: 50%;
+    min-width: 24px;
+    min-height: 24px;
+    margin: 8px;
+    padding: 0;
+    border: none;
+    transition: all 200ms ease;
+}
+
+.close-button:hover {
+    background: alpha(@error, 0.3);
+}
+
+.summary {
+    color: @onSurface;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.body {
+    color: @onSurfaceVariant;
+    font-size: 12px;
+}
+
+.time {
+    color: @outline;
+    font-size: 11px;
+}
+
+/* ===== Notification actions ===== */
+.notification-action {
+    background: alpha(@primaryContainer, 0.35);
+    color: @onPrimaryContainer;
+    border-radius: 8px;
+    border: none;
+    padding: 4px 10px;
+    margin: 4px 4px 8px 4px;
+    transition: all 200ms ease;
+}
+
+.notification-action:hover {
+    background: alpha(@primary, 0.25);
+}
+
+/* ===== Critical notification ===== */
+.critical {
+    border: 1px solid alpha(@error, 0.5);
+}
+
+/* ===== Notification popup (floating) ===== */
+.floating-notifications {
+    background: transparent;
+}
+
+.floating-notifications .notification {
+    background: alpha(@surface, 0.85);
+    border: 1px solid alpha(@outlineVariant, 0.3);
+}
+
+/* ===== Blank window (behind control center) ===== */
+.blank-window {
+    background: transparent;
+}

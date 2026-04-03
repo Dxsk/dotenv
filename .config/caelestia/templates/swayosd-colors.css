@@ -1,0 +1,4 @@
+@define-color primary #{{ primary.hex }};
+@define-color onSurfaceVariant #{{ onSurfaceVariant.hex }};
+@define-color surfaceContainer #{{ surfaceContainer.hex }};
+@define-color outlineVariant #{{ outlineVariant.hex }};

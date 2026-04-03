@@ -1,0 +1,9 @@
+#!/bin/bash
+# Toggle only the top waybar (the one without -b sidebar)
+# Find waybar PIDs that are NOT the sidebar
+for pid in $(pgrep waybar); do
+    if ! grep -qz "\-b" /proc/$pid/cmdline 2>/dev/null; then
+        kill -SIGUSR1 "$pid"
+        exit 0
+    fi
+done

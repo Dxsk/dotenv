@@ -1,0 +1,24 @@
+* {
+    primary: #{{ primary.hex }};
+    primary-dim: #{{ primaryDim.hex }};
+    on-primary: #{{ onPrimary.hex }};
+    primary-container: #{{ primaryContainer.hex }};
+    on-primary-container: #{{ onPrimaryContainer.hex }};
+    secondary: #{{ secondary.hex }};
+    secondary-container: #{{ secondaryContainer.hex }};
+    surface: #{{ surface.hex }};
+    surface-dim: #{{ surfaceDim.hex }};
+    surface-container: #{{ surfaceContainer.hex }};
+    surface-container-high: #{{ surfaceContainerHigh.hex }};
+    on-surface: #{{ onSurface.hex }};
+    on-surface-variant: #{{ onSurfaceVariant.hex }};
+    outline: #{{ outline.hex }};
+    outline-variant: #{{ outlineVariant.hex }};
+    background: #{{ background.hex }};
+    on-background: #{{ onBackground.hex }};
+    error: #{{ error.hex }};
+    text: #{{ text.hex }};
+    base: #{{ base.hex }};
+    mantle: #{{ mantle.hex }};
+    crust: #{{ crust.hex }};
+}

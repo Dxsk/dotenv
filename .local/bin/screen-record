@@ -1,0 +1,89 @@
+#!/bin/bash
+# GPU screen recording with multi-choice menu
+# Usage: screen-record toggle|menu|stop
+
+RECORDINGS_DIR="$HOME/Videos/recordings"
+PIDFILE="/tmp/screen-record.pid"
+MODEFILE="/tmp/screen-record.mode"
+
+mkdir -p "$RECORDINGS_DIR"
+
+is_recording() {
+    [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null
+}
+
+stop_recording() {
+    if is_recording; then
+        kill -SIGINT "$(cat "$PIDFILE")" 2>/dev/null
+        local mode=$(cat "$MODEFILE" 2>/dev/null || echo "record")
+        rm -f "$PIDFILE" "$MODEFILE"
+        notify-send -a "Screen Recorder" "Enregistrement sauvegardé" "$RECORDINGS_DIR" -i camera-video
+    fi
+}
+
+start_recording() {
+    local filename="$RECORDINGS_DIR/$(date +%Y-%m-%d_%H-%M-%S).mp4"
+    local mode="$1"
+
+    case "$mode" in
+        audio)
+            gpu-screen-recorder -w screen -f 60 -a default_output -o "$filename" &
+            echo "audio" > "$MODEFILE"
+            ;;
+        audio-micro)
+            gpu-screen-recorder -w screen -f 60 -a default_output -a default_input -o "$filename" &
+            echo "audio+micro" > "$MODEFILE"
+            ;;
+        silent)
+            gpu-screen-recorder -w screen -f 60 -o "$filename" &
+            echo "silent" > "$MODEFILE"
+            ;;
+        gif)
+            local gifname="$RECORDINGS_DIR/$(date +%Y-%m-%d_%H-%M-%S).mp4"
+            gpu-screen-recorder -w screen -f 15 -o "$gifname" &
+            echo "gif" > "$MODEFILE"
+            ;;
+    esac
+
+    echo $! > "$PIDFILE"
+    notify-send -a "Screen Recorder" "Enregistrement démarré" "$mode" -i camera-video
+}
+
+show_menu() {
+    if is_recording; then
+        stop_recording
+        return
+    fi
+
+    choice=$(echo -e "󰕾  Avec son\n󰍬  Avec son + micro\n󰖁  Sans son\n󰟞  GIF (15 fps)" | rofi -dmenu -p "󰑊 Record" -theme-str 'window {fullscreen: false; width: 280px; padding: 0;} listview {lines: 4;}')
+
+    case "$choice" in
+        *son\ +\ micro*) start_recording audio-micro ;;
+        *Avec\ son*) start_recording audio ;;
+        *Sans\ son*) start_recording silent ;;
+        *GIF*) start_recording gif ;;
+    esac
+}
+
+case "$1" in
+    toggle)
+        if is_recording; then
+            stop_recording
+        else
+            start_recording audio
+        fi
+        ;;
+    toggle-area)
+        if is_recording; then
+            stop_recording
+        else
+            show_menu
+        fi
+        ;;
+    menu) show_menu ;;
+    stop) stop_recording ;;
+    *)
+        echo "Usage: screen-record {toggle|menu|stop}"
+        exit 1
+        ;;
+esac

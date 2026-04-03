@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+"""AK820 knob daemon - converts rotary knob to volume control"""
+
+import subprocess
+import evdev
+
+DEVICE_NAME = "Evision AK820"
+ABS_MISC = 40
+
+def find_device():
+    for path in evdev.list_devices():
+        dev = evdev.InputDevice(path)
+        if DEVICE_NAME in dev.name and evdev.ecodes.EV_ABS in dev.capabilities():
+            return dev
+    return None
+
+def main():
+    dev = find_device()
+    if not dev:
+        print(f"Device '{DEVICE_NAME}' not found")
+        return
+
+    print(f"Listening on {dev.path}: {dev.name}")
+    last_val = None
+
+    for event in dev.read_loop():
+        if event.type == evdev.ecodes.EV_ABS and event.code == ABS_MISC:
+            val = event.value
+            if last_val is not None:
+                diff = val - last_val
+                # Handle wrap-around
+                if diff > 128:
+                    diff -= 256
+                elif diff < -128:
+                    diff += 256
+
+                if diff > 0:
+                    subprocess.run(["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "2%+"],
+                                   capture_output=True)
+                elif diff < 0:
+                    subprocess.run(["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "2%-"],
+                                   capture_output=True)
+            last_val = val
+
+if __name__ == "__main__":
+    main()

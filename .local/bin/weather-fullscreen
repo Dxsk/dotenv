@@ -1,0 +1,78 @@
+#!/bin/bash
+# Fullscreen weather display via rofi
+# Uses wttr.in for detailed forecast
+
+CITY="17310"
+CACHE="/tmp/weather-cache.txt"
+CACHE_AGE=600
+
+if [ ! -f "$CACHE" ] || [ $(($(date +%s) - $(stat -c %Y "$CACHE" 2>/dev/null || echo 0))) -gt "$CACHE_AGE" ]; then
+    curl -s "wttr.in/${CITY}?format=j1&lang=fr" > "$CACHE" 2>/dev/null
+fi
+
+# Current
+temp=$(jq -r '.current_condition[0].temp_C' "$CACHE")
+feel=$(jq -r '.current_condition[0].FeelsLikeC' "$CACHE")
+desc=$(jq -r '.current_condition[0].lang_fr[0].value // .current_condition[0].weatherDesc[0].value' "$CACHE")
+humidity=$(jq -r '.current_condition[0].humidity' "$CACHE")
+wind=$(jq -r '.current_condition[0].windspeedKmph' "$CACHE")
+winddir=$(jq -r '.current_condition[0].winddir16Point' "$CACHE")
+uv=$(jq -r '.current_condition[0].uvIndex' "$CACHE")
+visibility=$(jq -r '.current_condition[0].visibility' "$CACHE")
+pressure=$(jq -r '.current_condition[0].pressure' "$CACHE")
+
+# Weather icon
+icon="󰖐"
+case "${desc,,}" in
+    *soleil*|*clair*|*ensoleillé*) icon="󰖙" ;;
+    *nuage*|*couvert*) icon="󰖐" ;;
+    *pluie*|*averse*) icon="󰖗" ;;
+    *orage*) icon="󰖓" ;;
+    *neige*) icon="󰖘" ;;
+    *brouillard*|*brume*) icon="󰖑" ;;
+esac
+
+# Forecast
+forecast=""
+for i in 0 1 2; do
+    fdate=$(jq -r ".weather[$i].date" "$CACHE")
+    fname=$(LC_ALL=fr_FR.UTF-8 date -d "$fdate" +%A 2>/dev/null || echo "$fdate")
+    fmax=$(jq -r ".weather[$i].maxtempC" "$CACHE")
+    fmin=$(jq -r ".weather[$i].mintempC" "$CACHE")
+    fdesc=$(jq -r ".weather[$i].hourly[4].lang_fr[0].value // .weather[$i].hourly[4].weatherDesc[0].value" "$CACHE")
+    frain=$(jq -r ".weather[$i].hourly[4].chanceofrain" "$CACHE")
+    fsunrise=$(jq -r ".weather[$i].astronomy[0].sunrise" "$CACHE")
+    fsunset=$(jq -r ".weather[$i].astronomy[0].sunset" "$CACHE")
+
+    ficon="󰖐"
+    case "${fdesc,,}" in
+        *soleil*|*clair*|*ensoleillé*) ficon="󰖙" ;;
+        *nuage*|*couvert*) ficon="󰖐" ;;
+        *pluie*|*averse*) ficon="󰖗" ;;
+        *orage*) ficon="󰖓" ;;
+        *neige*) ficon="󰖘" ;;
+        *brouillard*|*brume*) ficon="󰖑" ;;
+    esac
+
+    forecast="${forecast}${ficon}  ${fname^}
+    ${fmin}° / ${fmax}°  ·  ${fdesc}
+    󰖗 ${frain}%  ·  󰖙 ${fsunrise} - ${fsunset}
+"
+done
+
+lines="${icon}  ${temp}°C
+Ressenti ${feel}°C  ·  ${desc}
+
+───────────────────────
+
+󰖗  Humidite          ${humidity}%
+󰖝  Vent              ${wind} km/h ${winddir}
+󰖙  Indice UV         ${uv}
+󰈈  Visibilite        ${visibility} km
+󰁅  Pression          ${pressure} hPa
+
+───────────────────────
+
+${forecast}"
+
+echo "$lines" | rofi -dmenu -p "" -theme ~/.config/rofi/weather.rasi

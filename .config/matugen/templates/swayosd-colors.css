@@ -1,0 +1,4 @@
+@define-color primary {{colors.primary.default.hex}};
+@define-color onSurfaceVariant {{colors.on_surface_variant.default.hex}};
+@define-color surfaceContainer {{colors.surface_container.default.hex}};
+@define-color outlineVariant {{colors.outline_variant.default.hex}};

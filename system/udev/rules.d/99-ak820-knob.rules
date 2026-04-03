@@ -1,0 +1,2 @@
+## Allow user access to AK820 knob
+SUBSYSTEM=="input", ATTRS{idVendor}=="320f", ATTRS{idProduct}=="505b", MODE="0666"

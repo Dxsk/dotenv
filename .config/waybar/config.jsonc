@@ -1,0 +1,94 @@
+{
+    "layer": "top",
+    "position": "top",
+    "start_hidden": true,
+    "margin-top": 0,
+    "margin-left": 400,
+    "margin-right": 400,
+    "spacing": 0,
+
+    "modules-left": [
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "mpris"
+    ],
+    "modules-right": [
+        "custom/timer",
+        "custom/weather",
+        "tray",
+        "clock",
+        "custom/power"
+    ],
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 50,
+        "separate-outputs": true,
+        "rewrite": {
+            "(.*) — Zen Browser": " $1",
+            "(.*) — Betterbird": "󰺻 $1",
+            "(.*) - kitty": " $1",
+            "(.*) - Discord": "󰙯 $1",
+            "(.*) - Spotify": " $1"
+        }
+    },
+
+    "mpris": {
+        "format": "{status_icon}  {artist} - {title}",
+        "format-paused": "{status_icon}  {artist} - {title}",
+        "max-length": 40,
+        "status-icons": {
+            "playing": "",
+            "paused": "",
+            "stopped": ""
+        },
+        "on-click": "playerctld shift",
+        "on-click-right": "playerctl play-pause"
+    },
+
+    "custom/weather": {
+        "exec": "curl -s 'wttr.in/17310?format=%c+%t' | tr -d '+'",
+        "interval": 900,
+        "format": "{}",
+        "tooltip": false,
+        "on-click": "~/.local/bin/weather-fullscreen"
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    "clock": {
+        "format": "  {:%A %d %B  %H:%M}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "left",
+            "format": {
+                "months": "<span color='#f9b7a5'><b>{}</b></span>",
+                "days": "<span color='#f9e0da'>{}</span>",
+                "weekdays": "<span color='#ffe8c4'><b>{}</b></span>",
+                "today": "<span color='#f9b7a5'><b><u>{}</u></b></span>"
+            }
+        }
+    },
+
+    "custom/timer": {
+        "exec": "~/.local/bin/timer status",
+        "return-type": "json",
+        "interval": 1,
+        "on-click": "~/.local/bin/timer ask",
+        "on-click-right": "~/.local/bin/timer stop",
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "rofi -show power-menu -modi 'power-menu:~/.config/rofi/power-menu.sh'",
+        "on-click-right": "hyprlock"
+    }
+}

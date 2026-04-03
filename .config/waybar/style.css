@@ -1,0 +1,249 @@
+@import url("file:///home/dwi/.local/state/caelestia/theme/waybar-colors.css");
+
+/* ===== Global ===== */
+* {
+    font-family: "Rubik", "CaskaydiaCove NF", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+/* ===== Top Bar (auto-hide) ===== */
+window#waybar.top > box {
+    background: alpha(@surfaceContainer, 0.75);
+    border-radius: 0 0 14px 14px;
+    border: 1px solid alpha(@outlineVariant, 0.2);
+    border-top: none;
+    padding: 4px 12px;
+    margin: 0;
+}
+
+/* ===== Sidebar (main bar) ===== */
+window#waybar.left > box {
+    background: alpha(@surfaceContainer, 0.7);
+    border-radius: 14px;
+    border: 1px solid alpha(@outlineVariant, 0.25);
+    padding: 4px 2px;
+    margin: 0;
+}
+
+/* ===== Launcher button ===== */
+#custom-launcher {
+    color: @primary;
+    font-size: 20px;
+    padding: 8px 4px;
+    margin: 4px 2px;
+    border-radius: 12px;
+    min-width: 28px;
+}
+
+#custom-launcher:hover {
+    background: alpha(@primary, 0.15);
+}
+
+/* ===== Workspaces (sidebar vertical) ===== */
+window#waybar.left #workspaces {
+    padding: 4px 0;
+    margin: 4px 2px;
+}
+
+window#waybar.left #workspaces button {
+    color: @onSurfaceVariant;
+    padding: 6px;
+    border-radius: 10px;
+    min-width: 10px;
+    min-height: 10px;
+    font-size: 14px;
+    background: transparent;
+    border: none;
+}
+
+window#waybar.left #workspaces button.active {
+    color: @onPrimary;
+    background: alpha(@primary, 0.85);
+    border-radius: 10px;
+    min-height: 20px;
+}
+
+window#waybar.left #workspaces button.empty {
+    color: @onSurfaceVariant;
+    font-size: 14px;
+}
+
+window#waybar.left #workspaces button:hover {
+    color: @primary;
+    background: alpha(@primary, 0.15);
+}
+
+/* ===== Sidebar icon modules ===== */
+window#waybar.left #cpu,
+window#waybar.left #memory,
+window#waybar.left #temperature,
+window#waybar.left #mpris,
+window#waybar.left #pulseaudio,
+window#waybar.left #network,
+window#waybar.left #bluetooth,
+window#waybar.left #custom-notification,
+window#waybar.left #custom-recorder,
+window#waybar.left #custom-lock {
+    font-size: 15px;
+    padding: 8px 4px;
+    margin: 1px 2px;
+    border-radius: 10px;
+    min-width: 28px;
+    color: @onSurfaceVariant;
+}
+
+window#waybar.left #cpu { color: @primary; }
+window#waybar.left #memory { color: @secondary; }
+window#waybar.left #temperature { color: @onSurfaceVariant; }
+window#waybar.left #temperature.critical { color: @error; background: alpha(@error, 0.1); }
+window#waybar.left #mpris { color: @secondary; font-size: 16px; }
+window#waybar.left #mpris.playing { color: @primary; }
+window#waybar.left #pulseaudio.muted { color: alpha(@outline, 0.4); }
+window#waybar.left #network.disconnected { color: alpha(@outline, 0.4); }
+window#waybar.left #bluetooth.off { color: alpha(@outline, 0.4); }
+window#waybar.left #custom-recorder.recording { color: @error; background: alpha(@error, 0.12); }
+
+window#waybar.left #custom-scarlett {
+    color: @primary;
+}
+
+window#waybar.left #custom-screenshot {
+    color: @onSurfaceVariant;
+}
+
+window#waybar.left #custom-lock {
+    color: @onSurfaceVariant;
+    font-size: 14px;
+}
+
+/* ===== Clock in sidebar ===== */
+window#waybar.left #clock {
+    color: @primary;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 8px 2px;
+    margin: 4px 2px;
+    border-radius: 10px;
+    min-width: 28px;
+    background: alpha(@primary, 0.08);
+}
+
+/* ===== Sidebar hover ===== */
+window#waybar.left #cpu:hover,
+window#waybar.left #memory:hover,
+window#waybar.left #temperature:hover,
+window#waybar.left #mpris:hover,
+window#waybar.left #pulseaudio:hover,
+window#waybar.left #network:hover,
+window#waybar.left #bluetooth:hover,
+window#waybar.left #custom-notification:hover,
+window#waybar.left #custom-recorder:hover,
+window#waybar.left #custom-scarlett:hover,
+window#waybar.left #custom-screenshot:hover,
+window#waybar.left #custom-lock:hover,
+window#waybar.left #clock:hover {
+    background: alpha(@primary, 0.12);
+}
+
+/* ===== Top bar modules ===== */
+#window {
+    color: @onSurfaceVariant;
+    font-weight: 500;
+    padding: 4px 14px;
+    margin: 2px 4px;
+}
+
+#clock {
+    color: @onSurface;
+    font-weight: 600;
+    padding: 4px 14px;
+    margin: 2px 4px;
+    border-radius: 10px;
+}
+
+#mpris {
+    color: @secondary;
+    font-style: italic;
+    padding: 4px 10px;
+    margin: 2px 4px;
+    border-radius: 10px;
+}
+
+#mpris.playing {
+    color: @primary;
+}
+
+#tray {
+    padding: 4px 8px;
+    margin: 2px 4px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#custom-weather {
+    color: @onSurfaceVariant;
+    padding: 4px 10px;
+    margin: 2px 4px;
+}
+
+/* ===== Timer ===== */
+#custom-timer {
+    color: @onSurfaceVariant;
+    padding: 4px 10px;
+    margin: 2px 4px;
+    border-radius: 10px;
+}
+
+#custom-timer.running {
+    color: @primary;
+    background: alpha(@primary, 0.1);
+}
+
+#custom-timer.done {
+    color: @error;
+    background: alpha(@error, 0.12);
+}
+
+#custom-power {
+    color: @error;
+    font-size: 14px;
+    padding: 4px 10px;
+    margin: 2px 4px;
+    border-radius: 10px;
+}
+
+#custom-power:hover {
+    background: alpha(@error, 0.15);
+}
+
+/* ===== Top bar hover ===== */
+window#waybar.top #window:hover,
+window#waybar.top #clock:hover,
+window#waybar.top #mpris:hover,
+window#waybar.top #tray:hover,
+window#waybar.top #custom-weather:hover {
+    background: alpha(@primary, 0.1);
+}
+
+/* ===== Tooltip ===== */
+tooltip {
+    background: alpha(@surfaceContainer, 0.92);
+    border: 1px solid alpha(@outlineVariant, 0.3);
+    border-radius: 12px;
+    padding: 10px 12px;
+}
+
+tooltip label {
+    color: @onSurface;
+    font-family: "CaskaydiaCove NF", monospace;
+    font-size: 12px;
+}

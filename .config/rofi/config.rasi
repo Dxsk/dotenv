@@ -1,0 +1,99 @@
+@import "~/.local/state/caelestia/theme/rofi-colors.rasi"
+
+configuration {
+    modi: "drun,run,window";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    font: "Rubik 14";
+    display-drun: "  Apps";
+    display-run: "  Run";
+    display-window: "  Windows";
+    drun-display-format: "{name}";
+    hover-select: true;
+    me-select-entry: "";
+    me-accept-entry: "MousePrimary";
+    terminal: "kitty";
+}
+
+window {
+    fullscreen: true;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 25% 30%;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [inputbar, listview];
+    spacing: 20px;
+}
+
+inputbar {
+    background-color: @surface;
+    border-radius: 14px;
+    padding: 14px 20px;
+    spacing: 12px;
+    children: [prompt, entry];
+    border: 1px solid;
+    border-color: @outline-variant;
+}
+
+prompt {
+    color: @primary;
+    font: "CaskaydiaCove NF 16";
+    background-color: transparent;
+}
+
+entry {
+    color: @on-surface;
+    placeholder: "Search applications...";
+    placeholder-color: @on-surface-variant;
+    background-color: transparent;
+}
+
+listview {
+    lines: 8;
+    columns: 1;
+    fixed-height: true;
+    spacing: 4px;
+    scrollbar: false;
+    background-color: transparent;
+}
+
+element {
+    padding: 12px 16px;
+    border-radius: 12px;
+    spacing: 14px;
+    background-color: @surface;
+    cursor: pointer;
+    border: 1px solid;
+    border-color: @outline-variant;
+}
+
+element normal.normal {
+    background-color: @surface;
+    text-color: @on-surface;
+}
+
+element selected.normal {
+    background-color: @primary-container;
+    text-color: @on-primary-container;
+    border-color: @primary;
+}
+
+element alternate.normal {
+    background-color: @surface;
+    text-color: @on-surface;
+}
+
+element-icon {
+    size: 32px;
+    cursor: inherit;
+    background-color: transparent;
+}
+
+element-text {
+    color: inherit;
+    cursor: inherit;
+    vertical-align: 0.5;
+    background-color: transparent;
+}

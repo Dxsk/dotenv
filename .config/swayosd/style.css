@@ -1,0 +1,54 @@
+@import url("file:///home/dwi/.local/state/caelestia/theme/swayosd-colors.css");
+
+window#osd {
+    border-radius: 999px;
+    border: 1px solid alpha(@outlineVariant, 0.3);
+    background: alpha(@surfaceContainer, 0.85);
+}
+
+window#osd #container {
+    margin: 20px;
+}
+
+window#osd image,
+window#osd label {
+    color: @primary;
+    font-size: 18px;
+}
+
+window#osd progressbar:disabled,
+window#osd image:disabled {
+    opacity: 0.4;
+}
+
+window#osd progressbar,
+window#osd segmentedprogress {
+    min-height: 8px;
+    border-radius: 999px;
+    background: transparent;
+    border: none;
+}
+
+window#osd trough,
+window#osd segment {
+    min-height: inherit;
+    border-radius: inherit;
+    border: none;
+    background: alpha(@onSurfaceVariant, 0.2);
+}
+
+window#osd progress,
+window#osd segment.active {
+    min-height: inherit;
+    border-radius: inherit;
+    border: none;
+    background: @primary;
+}
+
+window#osd segment {
+    margin-left: 8px;
+}
+
+window#osd segment:first-child {
+    margin-left: 0;
+}

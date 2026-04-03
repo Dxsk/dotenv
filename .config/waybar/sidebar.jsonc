@@ -1,0 +1,183 @@
+{
+    "layer": "top",
+    "position": "left",
+    "margin-top": 6,
+    "margin-bottom": 6,
+    "margin-left": 6,
+    "spacing": 0,
+    "exclusive": true,
+    "on-sigusr1": "hide",
+    "on-sigusr2": "show",
+
+    "modules-left": [
+        "custom/launcher",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "mpris"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "custom/scarlett",
+        "network",
+        "bluetooth",
+        "custom/notification",
+        "custom/screenshot",
+        "custom/recorder",
+        "custom/lock",
+        "clock"
+    ],
+
+    "custom/launcher": {
+        "format": "󰕰",
+        "tooltip-format": "Applications",
+        "on-click": "rofi -show drun"
+    },
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "6": "󰇮",
+            "8": "󰌾",
+            "9": "󰻞",
+            "10": "󰓇",
+            "active": "󰆍",
+            "default": "󰆍",
+            "empty": "󰆍"
+        },
+        "persistent-workspaces": {
+            "*": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        },
+        "on-click": "activate"
+    },
+
+    "cpu": {
+        "format": "󰻠",
+        "interval": 5,
+        "tooltip-format": "CPU: {usage}% ({avg_frequency} GHz)\nLoad: {load}"
+    },
+
+    "memory": {
+        "format": "󰍛",
+        "interval": 10,
+        "tooltip-format": "RAM: {used:0.1f}G / {total:0.1f}G ({percentage}%)\nSwap: {swapUsed:0.1f}G / {swapTotal:0.1f}G"
+    },
+
+    "temperature": {
+        "hwmon-path-abs": "/sys/devices/pci0000:00/0000:00:18.3/hwmon",
+        "input-filename": "temp1_input",
+        "format": "",
+        "critical-threshold": 85,
+        "interval": 10,
+        "tooltip-format": "CPU: {temperatureC}°C"
+    },
+
+    "mpris": {
+        "format": "{status_icon}",
+        "format-paused": "{status_icon}",
+        "status-icons": {
+            "playing": "",
+            "paused": "",
+            "stopped": ""
+        },
+        "tooltip-format": "{artist} - {title}",
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+
+    "pulseaudio": {
+        "format": "󰕾",
+        "format-bluetooth": "󰂯",
+        "format-muted": "󰖁",
+        "format-icons": {
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "tooltip-format": "Volume: {volume}%",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "pavucontrol",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+    },
+
+    "network": {
+        "format-wifi": "󰤨",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤭",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}",
+        "tooltip-format-ethernet": "{ifname}\n{ipaddr}/{cidr}",
+        "on-click": "nm-connection-editor"
+    },
+
+    "bluetooth": {
+        "format-on": "󰂯",
+        "format-off": "󰂲",
+        "format-connected": "󰂱",
+        "tooltip-format-connected": "{device_alias}",
+        "on-click": "blueman-manager"
+    },
+
+    "custom/scarlett": {
+        "format": "󰤽",
+        "tooltip-format": "Scarlett Mixer",
+        "on-click": "alsa-scarlett-gui"
+    },
+
+    "custom/screenshot": {
+        "format": "󰹑",
+        "tooltip-format": "Screenshot",
+        "on-click": "~/.local/bin/screenshot-menu"
+    },
+
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󰂚",
+            "none": "󰂜",
+            "dnd-notification": "󰂛",
+            "dnd-none": "󰪑",
+            "inhibited-notification": "󰂚",
+            "inhibited-none": "󰂜",
+            "dnd-inhibited-notification": "󰂛",
+            "dnd-inhibited-none": "󰪑"
+        },
+        "return-type": "json",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+
+    "custom/recorder": {
+        "exec": "~/.config/waybar/scripts/screen-record.sh status",
+        "return-type": "json",
+        "interval": 1,
+        "on-click": "~/.local/bin/screen-record menu",
+        "on-click-right": "~/.local/bin/screen-record stop",
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "custom/lock": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "hyprlock"
+    },
+
+    "clock": {
+        "format": "{:%H\n%M}",
+        "format-alt": "{:%d\n%m}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "left",
+            "format": {
+                "months": "<span color='#f9b7a5'><b>{}</b></span>",
+                "days": "<span color='#f9e0da'>{}</span>",
+                "weekdays": "<span color='#ffe8c4'><b>{}</b></span>",
+                "today": "<span color='#f9b7a5'><b><u>{}</u></b></span>"
+            }
+        }
+    }
+}

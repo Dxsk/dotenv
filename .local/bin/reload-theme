@@ -1,0 +1,18 @@
+#!/bin/bash
+# Reload all bars and notifications after color change
+
+sleep 1
+
+# Restart waybar
+killall waybar 2>/dev/null
+sleep 0.5
+waybar & disown 2>/dev/null
+waybar -b sidebar -c ~/.config/waybar/sidebar.jsonc -s ~/.config/waybar/style.css & disown 2>/dev/null
+
+# Reload swaync
+swaync-client --reload-css 2>/dev/null
+
+# Restart swayosd
+killall swayosd-server 2>/dev/null
+sleep 0.3
+swayosd-server -s ~/.config/swayosd/style.css & disown 2>/dev/null
