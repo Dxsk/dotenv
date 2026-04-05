@@ -38,6 +38,7 @@ PACMAN_PKGS=(
   xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
   kitty thunar
   kvantum qt6ct-kde nwg-look
+  waybar
   grimblast-git
   playerctl brightnessctl
 )
@@ -78,10 +79,8 @@ PACMAN_PKGS+=(
   stow wl-clipboard
 )
 
-# Caelestia shell (AUR)
+# AUR packages
 AUR_PKGS=(
-  caelestia-shell-git
-  hyprlauncher
   zen-browser-bin
 )
 
