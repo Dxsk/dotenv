@@ -3,5 +3,6 @@
     "editor.mouseWheelZoom": true,
     "editor.scrollbar.horizontalScrollbarSize": 15,
     "editor.scrollbar.verticalScrollbarSize": 15,
-    "files.autoSave": "afterDelay"
+    "files.autoSave": "afterDelay",
+    "explorer.confirmDelete": false
 }
