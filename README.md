@@ -1,6 +1,6 @@
 # Dragon Fire Desktop
 
-CachyOS (Arch) + Hyprland desktop configuration with Caelestia Shell and dynamic wallpaper theming.
+CachyOS (Arch) + Hyprland desktop configuration with Waybar and dynamic wallpaper theming via matugen.
 Managed with **GNU Stow**.
 
 ---
@@ -9,23 +9,25 @@ Managed with **GNU Stow**.
 
 - **Source Color**: `#fd5622` (vivid orange)
 - **Accent**: `#e53935` (red)
-- **Style**: Kanagawa Dragon inspired, dynamic Material You palette via Caelestia
-- **Wallpapers** change the entire color scheme automatically
+- **Style**: Kanagawa Dragon inspired, dynamic Material You palette via [matugen](https://github.com/InioX/matugen)
+- **Wallpapers** change the entire color scheme automatically (waybar, rofi, swaync, swayosd, hyprland)
 
 ## Stack
 
 | Component      | Choice |
 |---------------|--------|
 | WM            | [Hyprland](https://hyprland.org/) (dwindle layout) |
-| Shell         | [Caelestia Shell](https://github.com/caelestia-dots/shell) (Quickshell/QML) |
+| Bar           | [Waybar](https://github.com/Alexays/Waybar) |
+| Notifications | [SwayNC](https://github.com/ErikReider/SwayNotificationCenter) |
+| OSD           | [SwayOSD](https://github.com/ErikReider/SwayOSD) |
 | Session       | [greetd](https://sr.ht/~kennylevinsen/greetd/) + [ReGreet](https://github.com/rharish101/ReGreet) |
 | Terminal      | [Kitty](https://sw.kovidgoyal.net/kitty/) |
 | Shell (CLI)   | [Zsh](https://www.zsh.org/) + [Oh My Zsh](https://ohmyz.sh/) + [Powerlevel10k](https://github.com/romkatv/powerlevel10k) |
 | Editor        | [Vim](https://www.vim.org/) + [VSCodium](https://vscodium.com/) |
 | File Manager  | [Thunar](https://docs.xfce.org/xfce/thunar/start) |
 | Browser       | [Zen Browser](https://zen-browser.app/) |
-| Launcher      | [Caelestia launcher](https://github.com/caelestia-dots/shell) (integrated) |
-| GTK Theme     | [adw-gtk3-dark](https://github.com/lassekongo83/adw-gtk3) + Caelestia dynamic colors |
+| Launcher      | [Rofi](https://github.com/davatorium/rofi) (Wayland fork) |
+| GTK Theme     | [adw-gtk3-dark](https://github.com/lassekongo83/adw-gtk3) + matugen dynamic colors |
 | Qt Theme      | [Kvantum](https://github.com/tsujan/Kvantum) (WhiteSurDark) via qt6ct |
 | Icons         | [Papirus-Dark](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme) |
 | Cursor        | [Capitaine Cursors](https://github.com/keeferrourke/capitaine-cursors) |
@@ -33,6 +35,7 @@ Managed with **GNU Stow**.
 | Screen Record | [gpu-screen-recorder](https://github.com/dec05eba/gpu-screen-recorder) (system + mic) |
 | Images        | [Loupe](https://apps.gnome.org/Loupe/) |
 | Archives      | [File Roller](https://wiki.gnome.org/Apps/FileRoller) |
+| Monitoring    | [btop](https://github.com/aristocratos/btop) |
 | Backup        | [restic](https://restic.net/) + [rclone](https://rclone.org/) → kDrive |
 | Git Identity  | [git-identity-manager](https://github.com/Dxsk/git-identity-manager) |
 
@@ -60,6 +63,15 @@ The install script will:
 
 After install, **log out and back in** for full effect.
 
+### Quick commands (Makefile)
+
+```bash
+make install    # stow dotfiles to ~/
+make uninstall  # remove symlinks
+make reinstall  # restow (after adding/removing files)
+make check      # dry-run
+```
+
 ## Update
 
 ```bash
@@ -78,18 +90,36 @@ dotenv/
 │   │   ├── hyprqt6engine.conf     # Qt6 engine config
 │   │   ├── monitors.conf          # Monitor layout & refresh rates
 │   │   └── workspaces.conf        # Workspace assignments per monitor
-│   ├── caelestia/
-│   │   ├── shell.json             # Shell config (bar, dashboard, theming, idle)
-│   │   └── cli.json               # CLI config (record extraArgs for mic)
+│   ├── waybar/
+│   │   ├── config.jsonc           # Top bar config
+│   │   ├── sidebar.jsonc          # Side bar config
+│   │   ├── style.css              # Waybar styling
+│   │   └── scripts/               # Waybar helper scripts
+│   ├── matugen/
+│   │   ├── config.toml            # Dynamic theming config
+│   │   └── templates/             # Color templates (waybar, rofi, swaync, swayosd, hypr)
+│   ├── rofi/                      # App launcher config & theme
+│   ├── swaync/                    # Notification center config
+│   ├── swayosd/                   # OSD overlay config
+│   ├── caelestia/                 # Caelestia CLI/shell config (legacy theming)
 │   ├── kitty/
 │   │   ├── kitty.conf
 │   │   └── kanagawa-dragon.conf
-│   ├── gtk-3.0/settings.ini       # GTK3 theme (adw-gtk3-dark)
-│   ├── gtk-4.0/settings.ini       # GTK4 theme
-│   ├── qt6ct/qt6ct.conf           # Qt6 theme (Kvantum)
+│   ├── btop/btop.conf             # System monitor config
+│   ├── gtk-3.0/
+│   │   ├── settings.ini           # GTK3 theme (adw-gtk3-dark)
+│   │   ├── gtk.css                # Custom GTK3 colors
+│   │   └── thunar.css             # Thunar custom theme
+│   ├── gtk-4.0/
+│   │   ├── settings.ini           # GTK4 theme
+│   │   ├── gtk.css                # Custom GTK4 colors
+│   │   └── thunar.css             # Thunar custom theme
+│   ├── qt6ct/
+│   │   ├── qt6ct.conf             # Qt6 theme (Kvantum)
+│   │   └── colors/ambxst.colors   # Custom Qt color scheme
 │   ├── Kvantum/kvantum.kvconfig   # Kvantum theme (WhiteSurDark)
 │   ├── zsh/                       # Zsh modules (sourced by .zshrc)
-│   ├── systemd/user/              # Backup timers & services
+│   ├── systemd/user/              # Backup timers, services & portal overrides
 │   ├── fastfetch/config.jsonc
 │   ├── VSCodium/User/settings.json
 │   ├── kdeglobals
@@ -97,7 +127,17 @@ dotenv/
 ├── .local/
 │   ├── bin/
 │   │   ├── home-backup            # Restic backup script
-│   │   └── git-identity           # Git identity switcher
+│   │   ├── git-identity           # Git identity switcher
+│   │   ├── change-wallpaper       # Random wallpaper + matugen recolor
+│   │   ├── reload-theme           # Reload all theme components
+│   │   ├── screen-record          # Screen recording helper
+│   │   ├── screenshot-menu        # Screenshot menu
+│   │   ├── toggle-notifications   # Toggle swaync
+│   │   ├── toggle-showkeys        # Toggle key display overlay
+│   │   ├── toggle-topbar          # Toggle waybar visibility
+│   │   ├── knob-daemon            # Hardware knob input daemon
+│   │   ├── timer                  # Timer utility
+│   │   └── weather-fullscreen     # Weather display
 │   └── share/applications/
 │       └── zen.desktop            # Zen Browser with --no-remote
 ├── .vim/
@@ -105,6 +145,7 @@ dotenv/
 │   └── config/                    # Modular vim config
 ├── .vimrc
 ├── .zshrc
+├── Makefile                       # Quick stow commands
 ├── system/
 │   └── greetd/                    # Session manager configs (copied to /etc)
 │       ├── config.toml
@@ -123,26 +164,31 @@ dotenv/
 | Bind | Action |
 |------|--------|
 | `ALT + T` | Terminal (kitty) |
-| `ALT + D` | App launcher (Caelestia) |
+| `ALT + D` | App launcher (rofi) |
 | `ALT + E` | File manager (thunar) |
 | `ALT + C` | Kill window |
 | `ALT + F` | Fullscreen |
 | `ALT + V` | Toggle floating |
 | `ALT + W` | Toggle tabbed group |
 | `ALT + H` | Toggle split direction |
+| `ALT + L` | Lock screen |
 | `ALT + R` | Resize mode (arrows, Escape to exit) |
-| `ALT + B` | Random wallpaper |
-| `ALT + SHIFT + L` | Lock screen |
-| `ALT + SHIFT + V` | Clipboard history |
+| `ALT + B` | Random wallpaper + recolor |
+| `ALT + N` | Toggle notifications |
+| `ALT + A` | Toggle top bar |
+| `ALT + SHIFT + L` | Lock session |
+| `ALT + SHIFT + V` | Clipboard history (rofi) |
 | `ALT + SHIFT + S` | Screenshot region → clipboard |
 | `ALT + SHIFT + K` | Toggle key display overlay |
 | `ALT + SHIFT + M` | Exit Hyprland |
 | `ALT + arrows` | Move focus |
 | `ALT + SHIFT + arrows` | Move window |
+| `ALT + TAB / SHIFT+TAB` | Cycle group tabs |
 | `ALT + 1-0` | Switch workspace |
 | `ALT + SHIFT + 1-0` | Move window to workspace |
-| `Print` | Screenshot region (with annotation) |
-| `ALT + Print` | Screenshot fullscreen |
+| `Print` | Screenshot region → clipboard |
+| `SHIFT + Print` | Screenshot current output |
+| `ALT + Print` | Screenshot current window |
 
 ## Home Backup
 
