@@ -4,5 +4,7 @@
     "editor.scrollbar.horizontalScrollbarSize": 15,
     "editor.scrollbar.verticalScrollbarSize": 15,
     "files.autoSave": "afterDelay",
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "claudeCode.preferredLocation": "panel",
+    "git.autofetch": true
 }

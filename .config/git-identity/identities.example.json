@@ -1,0 +1,14 @@
+{
+  "identities": [
+    {
+      "label": "GitHub - username",
+      "name": "your-name",
+      "email": "your-email@users.noreply.github.com"
+    },
+    {
+      "label": "GitLab - username",
+      "name": "your-name",
+      "email": "your-email@users.noreply.gitlab.com"
+    }
+  ]
+}
